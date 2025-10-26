@@ -1,0 +1,27 @@
+Exercise 7 — Install Role-Based Authorization Strategy
+plugin & configure roles (20 marks)
+1. Install plugin
+○ Jenkins UI → Manage Jenkins → Manage Plugins → Available tab →
+search Role-based Authorization Strategy → tick and Install without
+restart (or with restart).
+2. Enable the strategy
+○ Manage Jenkins → Configure Global Security → Under Authorization,
+choose Role-Based Strategy → Save.
+3. Create and configure roles
+○ Jenkins UI → Manage Jenkins → Manage and Assign Roles → Manage
+Roles
+○ Under Global roles add a role name (e.g., developer, qa, pm) and select
+checkboxes for permissions.
+○ Example:
+■ developer: Overall/Read, Job/Build, Job/Configure, Job/Read,
+Job/Workspace, Run/Update
+■ qa: Overall/Read, Job/Read, Job/Build, Job/Workspace (no configure)
+■ pm: Overall/Read, Job/Read, View/Read (restrict build/configure)
+○ Save roles.
+4. Assign users to roles
+○ Go to Assign Roles tab → Under Global roles, add username → select
+checkbox for the role (e.g., developer).
+5. Verify permissions
+○ Log in as each user or use UI to simulate and try to access/modify jobs:
+■ Developer should be able to create and run builds.
+■ PM should only view job status and build history.
