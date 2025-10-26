@@ -1,0 +1,20 @@
+Exercise 9 — Detailed Role assignments scenario
+
+This is similar to exercise 7 but with specifics:
+1. Install plugin — as in Exercise 7.
+2. Create roles for Developer, QA, Project Manager:
+○ Developer: Job/Configure, Job/Build, Job/Read, Run/Delete, SCM/Tag (as
+needed)
+○ QA Engineer: Job/Read, Job/Build, Job/Workspace, Run/View
+○ Project Manager: Overall/Read, Job/Read, Run/View (no configure, no build)
+3. Assign users
+○ Assign dev_user → Developer role.
+○ Assign qa_user → QA role.
+○ Assign pm_user → Project Manager role.
+4. Restrict PM access
+○ Ensure PM role does not have Job/Build or Job/Configure permissions —
+only view-level permissions.
+5. Test role assignments
+○ Login with pm_user → Try to edit a job (should be forbidden).
+○ Login with dev_user → Create/configure/build job (allowed).
+○ Login with qa_user → Trigger builds and view workspaces (allowed asdefined).
