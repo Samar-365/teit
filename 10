@@ -1,0 +1,13 @@
+Exercise 10 — Continuous Integration (exp 4)
+1. Create and build a freestyle project in Jenkins using your GitHub repo
+○ Jenkins → New Item → Freestyle project → Give name → OK.
+○ Under Source Code Management choose Git, provide repo URL and
+credentials if private.
+○ Under Build add Invoke top-level Maven targets with clean package or
+set Execute shell with mvn clean package.
+○ Save → Build Now.
+2. Check Console Output
+○ Click build number → Console Output → verify BUILD SUCCESS and test
+logs.
+○ This demonstrates CI: code is fetched, compiled, tested automatically by
+Jenkins on build trigger.
