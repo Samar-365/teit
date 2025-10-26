@@ -1,0 +1,40 @@
+A. Create and build the job in Jenkins
+1. Open Jenkins UI: http://localhost:8080/ (or your Jenkins URL)
+2. Click New Item
+3. Enter item name, choose Freestyle project, click OK.
+4. In Source Code Management select Git, enter your repo URL.
+5. Under Build, add Invoke top-level Maven targets (if you use maven) or Execute
+shell to run commands.
+6. Save and click Build Now.
+7. Check Console Output: click the build number → Console Output.
+B. Build a pipeline of jobs using Maven
+● Option 1: Create multiple freestyle jobs (JobA builds code, JobB runs tests) and add
+Post-build Actions → Build other projects to chain.
+● Option 2 (recommended): Use a Jenkins Pipeline job with a Jenkinsfile to run
+Maven goals in sequential stages:
+
+
+pipeline {
+agent any
+stages {
+stage('Build') {
+steps {
+sh 'mvn -B clean package'
+}
+}
+stage('Test') {
+steps {
+sh 'mvn test'
+}
+}
+stage('Deploy') {
+steps {
+echo 'Deploy stage (configure as needed)'
+}
+}
+}
+}
+
+
+● Add repository in Pipeline job and configure Jenkinsfile from repo or paste
+pipeline script
