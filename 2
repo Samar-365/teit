@@ -1,0 +1,18 @@
+Same as exercise 1 with an additional git pull and branch creation.
+1–4: (Same commands as Exercise 1 to init, status, configure user, list config.)
+5. Pull GIT remote repository (GitHub) to local repository
+● If you already have a remote repo URL:
+git remote add origin
+https://github.com/username/repository-name.git
+git pull origin main # or master depending on default branch
+Notes
+● If the local repo is empty and remote has content, git pull will fetch & merge.
+● If clone is easier:
+git clone https://github.com/username/repository-name.git
+cd repository-name
+6. Create and switch to a new branch called feature/add-my-name
+git checkout -b feature/add-my-name
+Expected
+● Switched to a new branch 'feature/add-my-name'
+7. Demonstrate git log command
+git log --oneline --decorate --graph
