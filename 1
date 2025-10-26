@@ -1,0 +1,47 @@
+1. Create GIT Repository (local)
+mkdir myrepo
+cd myrepo
+git init
+Explanation / Expected
+● Initialized empty Git repository in .../myrepo/.git/
+● Creates a local .git folder.
+2. Check the status of GIT Repository
+git status
+Expected
+● On branch master (or main) and nothing to commit, working tree
+clean if empty.
+3. Create user in GIT (configure commit identity)
+git config user.name "Your Name"
+git config user.email "your-email@example.com"
+(Or globally:)
+git config --global user.name "Your Name"
+git config --global user.email "your-email@example.com"
+Explanation
+● This sets the author identity for commits.
+4. List all users in GIT
+● Locally: Git itself doesn’t have a user database. To list configured identity values:
+git config --list
+# or show specific:
+git config user.name
+git config user.email
+● For contributors in the repo (history) after commits:
+git shortlog -s -n
+Explanation
+● git config --list shows configured user details.
+● git shortlog lists commit counts per author (if commits exist).
+5. Put files in repository to staging area
+# create a file
+echo "Hello" > file1.txt
+git add file1.txt
+# multiple
+git add .
+Explanation
+● git add moves files to staging area.
+6. Commit the files which are added to staging area
+git commit -m "Add file1.txt"
+Expected
+● Commit created, shows commit id and files.
+7. Demonstrate git log command
+git log --oneline --decorate --graph --all
+Explanation / Expected
+● Shows commit history graph with commit messages and IDs.
