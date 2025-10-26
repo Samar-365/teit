@@ -1,0 +1,20 @@
+1. Create GIT Repository
+mkdir projectA
+cd projectA
+git init
+2. Check the status of GIT Repository
+git status
+3. Send GIT local repository to remote repository (GitHub)
+● Create a new empty repo on GitHub (no README) — say
+https://github.com/YourUser/projectA.git.
+git remote add origin https://github.com/YourUser/projectA.git
+git branch -M main # optional: rename branch to main
+git push -u origin main
+
+Explanation
+● -u sets upstream.
+4. Push local repository to remote repository
+● After commits:
+git add .
+git commit -m "Initial commit"
+git push origin main
