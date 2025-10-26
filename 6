@@ -1,0 +1,53 @@
+Exercise 6 — Maven project + JUnit4 + Jenkins
+integration 
+Steps:
+1. Create a Maven project
+mvn archetype:generate -DgroupId=com.example -DartifactId=myapp
+-DarchetypeArtifactId=maven-archetype-quickstart
+-DinteractiveMode=false
+cd myapp
+2. Add JUnit4 dependency in pom.xml (quick snippet):
+<dependencies>
+<dependency>
+<groupId>junit</groupId>
+<artifactId>junit</artifactId>
+<version>4.13.2</version>
+<scope>test</scope>
+</dependency>
+</dependencies>
+3. Create a simple test at src/test/java/com/example/AppTest.java (the
+archetype creates one).
+4. Run tests locally
+mvn test
+Expected
+● Build passes and JUnit tests run.
+5. Integrate with Jenkins
+● Create a new Jenkins job (Freestyle or Pipeline).
+● For Freestyle:
+○ Under Source Code Management supply Git repo URL.
+○ Under Build add Invoke top-level Maven targets and set Goals to clean
+test or clean package.
+○ Build Now → check console for Surefire test reports.
+● For Pipeline:
+○ Use a Jenkinsfile with:
+
+
+pipeline {
+agent any
+stages {
+stage('Checkout') {
+steps { checkout scm }
+}
+stage('Build & Test') {
+steps { sh 'mvn -B clean test' }
+}
+}
+post {
+always {
+junit '**/target/surefire-reports/*.xml'
+}
+}
+}
+
+
+● This will show test results in Jenkins UI (blue/green and test reports).
