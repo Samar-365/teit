@@ -1,0 +1,31 @@
+1. Create GIT Repository
+● You can either git init locally or clone a remote. Example (clone):
+git clone https://github.com/username/repository-name.git
+cd repository-name
+2. Pull GIT remote repository(Github) to local repository
+git pull origin main
+3. Create and fork repository in GITHUB. Create and merge pull request.
+Steps (GitHub UI + local):
+● On GitHub: go to the original repo → Click Fork (top-right). This creates
+github.com/YourUser/original-repo.
+● Locally:
+git clone https://github.com/YourUser/original-repo.git
+cd original-repo
+git checkout -b feature/add-my-name
+# Make edits, e.g. edit README.md
+git add README.md
+git commit -m "Add my name"
+git push origin feature/add-my-name
+● On GitHub (forked repo): you’ll see a Compare & pull request button → click it to
+open a PR targeting the original repo (or open PR from fork to original).
+● Fill title/description → Create pull request.
+● To merge (if you have permission on target repo or the owner merges):
+○ On GitHub PR page click Merge pull request → Confirm merge.
+○ Or if you are the repo owner: Merge from UI.
+Alternative (if you want to merge locally after fetch & merge):
+● Upstream is original repo; set upstream and fetch:
+git remote add upstream
+https://github.com/originalOwner/repository.git
+git fetch upstream
+git checkout main
+git merge upstream/main
