@@ -1,0 +1,34 @@
+Exercise 11 — Full Git workflow (combined)
+
+This covers the last long list (configure user, clone, modify README, status, stage, commit,
+push, branch, git log).
+Follow these steps:
+1. Configure your Git user information
+git config --global user.name "Your Name"
+git config --global user.email "your-email@example.com"
+2. Clone the repository
+git clone https://github.com/YourUser/repository.git
+cd repository
+3. Open README.txt and make a minor change
+● Edit README.txt in any text editor and add your name under Contributors.
+Contributors:
+- Your Name
+4. Check the status of your repository
+git status
+# Expected: modified: README.txt
+5. Stage the changes you made to README.txt
+git add README.txt
+6. Commit your changes
+git commit -m "Add my name to contributors list"
+7. Push your changes to the remote repository
+git push origin main
+# or if on a branch:
+git push -u origin feature/add-my-name
+8. Create and switch to a new branch called feature/add-my-name
+git checkout -b feature/add-my-name
+# make changes, then:
+git add .
+git commit -m "Add my name on branch"
+git push -u origin feature/add-my-name
+9. Demonstrate git log command
+git log --oneline --decorate --graph --all
