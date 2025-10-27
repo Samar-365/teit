@@ -5,6 +5,7 @@ Exercise 10 — Continuous Integration (exp 4)
 credentials if private.
 ○ Under Build add Invoke top-level Maven targets with clean package or
 set Execute shell with mvn clean package.
+mvn clean install
 ○ Save → Build Now.
 2. Check Console Output
 ○ Click build number → Console Output → verify BUILD SUCCESS and test
