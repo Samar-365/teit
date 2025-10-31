@@ -10,8 +10,6 @@ int main(void) {
 
     printf("\n Enter the password: \n");
 
-    // ✅ SAFE: Use fgets() to limit input to BUFF_SIZE - 1 characters.
-    // We use stdin as the source.
     if (fgets(buff, BUFF_SIZE, stdin) == NULL) {
         printf("Error reading input.\n");
         return 1;
