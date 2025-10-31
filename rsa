@@ -1,0 +1,96 @@
+from sympy import isprime
+from math import gcd
+from sympy.ntheory.modular import solve_congruence
+
+# Note: The original image uses 'mod_inverse' which is typically from 'sympy.ntheory.residue_ntheory'.
+# I've replaced it with a more standard approach using solve_congruence to find the modular inverse,
+# or you could use pow(e, -1, phi_n) in modern Python.
+# For simplicity and to match the spirit of the original which seems to imply a mod_inverse function,
+# I will define a simple version or use an accessible sympy function.
+# Let's use pow(a, -1, m) for modular inverse (requires Python 3.8+), or for broader compatibility,
+# we can use the 'sympy' function 'pow(e, -1, phi_n)' or solve_congruence.
+# Since the image uses 'mod_inverse', I'll use the sympy equivalent for D.
+def mod_inverse(a, m):
+    # This function finds the modular multiplicative inverse of a modulo m.
+    # It solves the congruence a*x = 1 (mod m)
+    # The result from solve_congruence is (x, m) where x is the solution.
+    from sympy.ntheory.modular import solve_congruence
+    # The solution for x is a single value, as it's a single congruence.
+    # The result is a tuple, e.g., ((x,), m)
+    result = solve_congruence([(a, 1)], [m])
+    if result:
+        # solve_congruence returns a tuple of (solution, modulus)
+        return result[0][0]
+    else:
+        # If no solution (i.e., gcd(a, m) != 1)
+        return None
+
+def generate_keys(p, q, e):
+    # Check if p and q are prime
+    if not (isprime(p) and isprime(q)):
+        raise ValueError("Both Numbers must be prime")
+
+    if p == q:
+        raise ValueError("p and q cannot be the same")
+
+    # 1. Calculate n = p * q
+    n = p * q
+    # 2. Calculate Euler's totient function: phi_n = (p-1) * (q-1)
+    phi_n = (p - 1) * (q - 1)
+
+    # 3. Check if e is coprime with phi_n (i.e., gcd(e, phi_n) == 1)
+    if gcd(e, phi_n) != 1:
+        raise ValueError(f"e={e} is not coprime with phi_n = {phi_n}. Choose a different e.")
+
+    # 4. Calculate the private key d, where d * e = 1 (mod phi_n)
+    d = mod_inverse(e, phi_n)
+
+    if d is None:
+         raise ValueError(f"Could not find modular inverse d for e={e} and phi_n={phi_n}. This usually means gcd(e, phi_n) != 1, but the check should have caught it.")
+
+    print("\n[Computed values:]")
+    print(f"n = {n}")
+    print(f"phi(n) = {phi_n}")
+    print(f"Private key d = {d}")
+
+    # Return the public key (e, n) and the private key d
+    return e, d, n
+
+def encrypt(message, e, n):
+    # C = M^e mod n
+    return pow(message, e, n)
+
+def decrypt(cipher, d, n):
+    # M = C^d mod n
+    return pow(cipher, d, n)
+
+
+if __name__ == "__main__":
+    try:
+        # Input for key generation
+        p = int(input("Enter the prime number p: "))
+        q = int(input("Enter the prime number q: "))
+        e = int(input("Enter public exponent e (coprime with phi(n)): "))
+
+        # Generate keys: public key (e, n) and private key d
+        e, d, n = generate_keys(p, q, e)
+
+        print(f"\n[Public Key (e, n)]: ({e}, {n})")
+        print(f"[Private Key (d, n)]: ({d}, {n})")
+
+        # Input for message
+        # Note: The message must be an integer M < n
+        message = int(input(f"\nEnter a number message to encrypt (as integer, must be < {n}): "))
+
+        # Encryption
+        cipher = encrypt(message, e, n)
+        print(f"\nEncrypted message: {cipher}")
+
+        # Decryption
+        decrypted = decrypt(cipher, d, n)
+        print(f"Decrypted message: {decrypted}")
+
+    except ValueError as ve:
+        print(f"\nError: {ve}")
+    except Exception as exc:
+        print(f"\nAn unexpected error occurred: {exc}")
