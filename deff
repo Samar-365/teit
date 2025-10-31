@@ -1,0 +1,94 @@
+from sympy import isprime
+# Note: In a real-world scenario, you would also need to ensure 'g' is a primitive root modulo 'n'.
+# For this script, we assume the user enters appropriate values for g and n.
+
+def generate_public_key(g, x, y, n):
+    """
+    Calculates the public keys A and B.
+    A = g^x mod n (Alice's Public Key)
+    B = g^y mod n (Bob's Public Key)
+    
+    Args:
+        g (int): The base generator.
+        x (int): Alice's private key.
+        y (int): Bob's private key.
+        n (int): The prime modulus.
+
+    Returns:
+        tuple: (A, B) - Alice's and Bob's public keys.
+    """
+    # Use Python's built-in pow(base, exp, mod) for efficient modular exponentiation
+    A = pow(g, x, n)
+    B = pow(g, y, n)
+
+    print(f"Value of A: {A}")
+    print(f"Value of B: {B}")
+
+    return A, B
+
+def generate_symmetric_key(A, B, x, y, n):
+    """
+    Calculates the final shared symmetric secret key K1 and K2.
+    K1 = B^x mod n (Alice's Shared Secret)
+    K2 = A^y mod n (Bob's Shared Secret)
+
+    Args:
+        A (int): Alice's public key (received by Bob).
+        B (int): Bob's public key (received by Alice).
+        x (int): Alice's private key.
+        y (int): Bob's private key.
+        n (int): The prime modulus.
+
+    Returns:
+        tuple: (K1, K2) - Alice's and Bob's shared keys.
+    """
+    # Alice calculates K1 = B^x mod n
+    K1 = pow(B, x, n)
+    # Bob calculates K2 = A^y mod n
+    K2 = pow(A, y, n)
+
+    print(f"Value of K1 (Alice's Secret): {K1}")
+    print(f"Value of K2 (Bob's Secret): {K2}")
+
+    return K1, K2
+
+if __name__ == "__main__":
+    try:
+        # --- Public Parameters (Agreed upon by both parties) ---
+        
+        n = int(input("Enter a prime number (n): "))
+        if not isprime(n):
+            # Raise an error if n is not prime, as required by the algorithm
+            raise ValueError("Value of n must be prime")
+
+        # g must be a primitive root modulo n for the best security
+        g = int(input("Enter a value of g (generator/primitive root): "))
+        
+        # --- Private Keys (Kept secret by each party) ---
+        
+        x = int(input("Enter a private key for Alice (x): "))
+        y = int(input("Enter a private key for Bob (y): "))
+        
+        print("\n--- STEP 1: Public Key Generation ---")
+        
+        # Public keys are generated and exchanged
+        A, B = generate_public_key(g, x, y, n)
+        
+        print("\n--- STEP 2: Shared Secret Calculation ---")
+
+        # Shared symmetric key is calculated by both parties
+        K1, K2 = generate_symmetric_key(A, B, x, y, n)
+
+        print("\n--- STEP 3: Verification ---")
+        
+        # Verification that the calculated keys match
+        if K1 == K2:
+            print(f"Key exchange successful! The shared key is {K1}")
+        else:
+            print("Error: Keys do not match!")
+            
+    except ValueError as e:
+        # Catch errors from non-integer input or non-prime 'n'
+        print(f"Error: {e}")
+    except Exception as e:
+        print(f"An unexpected error occurred: {e}")
