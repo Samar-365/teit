@@ -1,33 +1,37 @@
 #include <stdio.h>
+
 #include <string.h>
 
-#define PASSWORD "thecorrectpaswd"
-#define BUFF_SIZE 15
+int main(void)
 
-int main(void) {
-    char buff[BUFF_SIZE];
-    int pass = 0;
+{
 
-    printf("\n Enter the password: \n");
+char buff[15]; // buffer size = 15 bytes
 
-    if (fgets(buff, BUFF_SIZE, stdin) == NULL) {
-        printf("Error reading input.\n");
-        return 1;
-    }
+int pass = 0;
 
-  
-    buff[strcspn(buff, "\n")] = 0;
+printf("\n Enter the password: \n");
 
-    if (strcmp(buff, PASSWORD) == 0) { // strcmp returns 0 if strings are equal
-        printf("\n Correct Password \n");
-        pass = 1;
-    } else {
-        printf("\n Wrong Password \n");
-    }
+gets(buff); //?? UNSAFE: no bounds checking
 
-    if (pass) {
-        printf("\n Root privileges given to the user: \n");
-    }
+if(strcmp(buff, "thecorrectpaswd"))
 
-    return 0;
+{
+
+printf("\n Wrong Password \n");
+}
+
+else {
+
+printf("\n Correct Password \n");
+
+pass = 1;
+}
+
+if(pass) {
+
+printf("\n Root privileges given to the user \n");
+}
+
+return 0;
 }
